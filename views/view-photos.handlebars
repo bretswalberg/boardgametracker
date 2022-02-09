@@ -1,0 +1,28 @@
+<h3>Images</h3>
+<div class="container-fluid" align="right">
+	<button onclick="window.location.href='/newphoto'" class="btn btn-primary">Add Image</button>
+	</br></br>
+</div>
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Game</th>
+      <th scope="col">Image</th>
+      <th scope="col">Description</th>
+      <th scope="col">Modify</th>
+    </tr>
+  </thead>
+  <tbody>
+	{{#each data}}
+    <tr>
+		<td><a href="/viewgame?gid={{this.gameid}}">{{this.title}}</a></td>
+		<td><img src="{{this.image}}" height="75"></td>
+		<td>{{this.description}}</td>
+        <td>
+            <a href="/deletephoto?id={{this.id}}" onclick="return confirm('Are you sure you want to delete this photo?')">Delete</a>
+        </td>
+	</tr>
+	{{/each}}
+  </tbody>
+</table>
+

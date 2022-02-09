@@ -1,6 +1,7 @@
 <h3>My Games</h3>
 <div class="container-fluid" align="right">
-	<button onclick="window.location.href='/newgame'" class="btn btn-primary">Add a Game</button>
+	<button onclick="window.location.href='/newgame'" class="btn btn-primary">Add Game</button>
+	<button onclick="window.location.href='/newgame'" class="btn btn-primary">Import Game</button>
 	</br></br>
 </div>
 <table class="table table-striped">
@@ -13,9 +14,9 @@
       <th scope="col">Ages</th>
       <th scope="col">Game Length</th>
       <th scope="col">Rating</th>
-      <th scope="col">Times Played</th>
       <th scope="col">BoardGameGeek ID</th>
-      <th scope="col">Modify</th>
+      <th scope="col">Times Played</th>
+      <th scope="col">Manage</th>
     </tr>
   </thead>
   <tbody>
@@ -41,12 +42,12 @@
 		  {{/if}}
 		</td>
 		<td>{{this.rating}}</td>
-		<td>{{this.timesplayed}}</td>
 		<td>
 		{{#if this.bggid}}
 			<a href="https://boardgamegeek.com/boardgame/{{this.bggid}}" target="bgg">BGG Link</a>
 		{{/if}}
 		</td>
+		<td align="center">{{this.timesplayed}}</td>
 		<td>
 			<a href="/updategame?id={{this.id}}">Edit</a>
 			&nbsp;&nbsp;

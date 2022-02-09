@@ -1,0 +1,52 @@
+<h1>Update information for <i>{{data.title}}</i></h1>
+<div class="container" id="additions">
+    <div id="new-game" aria-labelledby="game" >
+        <form action="/updategame" method="post">
+          <div class="form-group">
+            <label for="game-title">Title* (Required)</label>
+            <input type="hidden" name="game-id" id="game-id" value="{{data.id}}">
+            <input type="text" size="50" class="form-control" name="game-title" id="game-title" value="{{data.title}}" required>
+          </div>
+      <div class="form-row">
+    			<div class="form-group col-md-6">
+            	<label for="game-year">Publisher</label>
+            	<input type="text" size="50" class="form-control" name="game-publisher" id="game-publisher" value="{{data.publisher}}" placeholder="Enter publisher">
+		    	</div>
+      </div>
+      <div class="form-row">
+    			<div class="form-group col-md-3">
+            	<label for="game-year">Year Released</label>
+            	<input type="number" size="6" class="form-control" name="game-year" id="game-year" value="{{data.year}}" placeholder="Enter year released">
+		    	</div>
+			    <div class="form-group col-md-3">
+            	<label for="game-min">Min. # of Players</label>
+            	<input type="number" size="2" class="form-control" name="game-min" id="game-min" value="{{data.minplayers}}">
+			    </div>
+
+			    <div class="form-group col-md-3">
+            	<label for="game-max">Max. # of Players</label>
+            	<input type="number" size="3" class="form-control" name="game-max" id="game-max" value="{{data.maxplayers}}">
+			    </div>
+			    <div class="form-group col-md-3">
+            	<label for="game-age">Min. Age</label>
+            	<input type="number" size="2" class="form-control" name="game-age" id="game-age" value="{{data.minage}}">
+			    </div>
+      </div>
+      <div class="form-row">
+          <div class="form-group col-md-3">
+            <label for="game-time">Length of Gameplay</label>
+            <input type="number" size="3" class="form-control" name="game-time" id="game-time" value="{{data.playtime}}">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="game-bgg">BoardGameGeek ID</label>
+            <input type="text" size="6" class="form-control" name="game-bgg" id="game-bgg" value="{{data.bggid}}">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="game-rating">Rating</label>
+            <input type="number" size="3" step="0.1" class="form-control" name="game-rating" id="game-rating" min="1" max="10" value="{{data.rating}}">
+          </div>
+			</div>
+      <button type="submit" class="btn btn-primary">Update Game</button>
+      </form>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<h1>Update a Photo</h1>
+<div class="container" id="additions">
+    <div id="new-photo" aria-labelledby="game" >
+      <form action="/updatephoto" method="post" required>
+        <div class="form-group">
+		  <input type="text" name="photo-id" value="{{data.id}}" hidden>
+          <label for="photo-gameid">Game* (Required)</label>
+		  <select name="photo-gameid" class="form-control" required>
+		    {{#each games}}
+			  <option value="{{this.id}}" {{this.selected}}>{{this.title}}</option>
+		    {{/each}}
+		  </select>
+        </div>
+        <div class="form-group">
+          <label for="photo-url">Image URL* (Required)</label>
+          <input type="text" class="form-control" name="photo-url" id="photo-url" value="{{data.image}}" placeholder="Enter photo URL here" required>
+        </div>
+        <div class="form-group">
+          <label for="photo-desc">Description</label>
+          <input type="text" class="form-control" name="photo-desc" id="photo-desc" value="{{data.description}}" placeholder="Enter description here">
+        </div>
+        <button type="submit" class="btn btn-primary">Update Photo</button>
+      </form>
+  </div>
+</div>

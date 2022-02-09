@@ -1,66 +1,32 @@
 <div class="card">
   <h5 class="card-header">Game Info</h5>
   <div class="card-body">
-    <h5 class="card-title"><i>{{game.title}}</i></h5>
+    <h4 class="card-title">{{game.title}}</h4>
     <h6 class="card-subtitle mb-2 text-muted">{{game.year}}</h6>
     <p class="card-text">
       {{#if game.publisher}}
-      {{game.title}} was published by {{game.publisher}}.
+      Publisher: {{game.publisher}}</br>
       {{/if}}
-      {{#if game.designer}}
-      {{game.title}} was designed by {{game.designer}}.
-      {{/if}}
+
       {{#if game.minplayers}}
       {{#if game.maxplayers}}
-      It can be played with a minimum of {{game.minplayers}} players and a maximum of
-      {{game.maxplayers}} players.
+      Players: {{game.minplayers}} - {{game.maxplayers}}</br>
       {{/if}}
       {{/if}}
       {{#if game.minage}}
-      Players should be at least {{game.minage}} years old.
+      Age: {{game.minage}}+</br>
       {{/if}}
       {{#if game.playtime}}
-      The average game lasts around {{game.playtime}} minutes.
-      {{/if}}
-      {{#if game.timesplayed}}
-      It has been played {{game.timesplayed}} times.
+      Avg Play Time: {{game.playtime}} minutes</br>
       {{/if}}
     </p>
     {{#if game.bggid}}
     <p>
-      Learn more about {{game.title}} at BoardGameGeek.
+      Learn more about {{game.title}} at  
+    <a href="https://www.boardgamegeek.com/boardgame/{{game.bggid}}" class="card-link" target="bgg">BoardGameGeek.com</a>
     </p>
-    <a href="https://www.boardgamegeek.com/boardgame/{{game.bggid}}" class="card-link">BGG link</a>
     {{/if}}
-  </div>
-</div>
 
-<div class="card">
-  <h5 class="card-header">Designers</h5>
-  <div class="card-body">
-    {{#each designers}}
-      <h5 class="card-title">{{this.firstname}} {{this.lastname}}</h5>
-    {{/each}}
-  </div>
-</div>
-
-<div class="card">
-  <h5 class="card-header">Mechanics</h5>
-  <div class="card-body">
-    {{#each mechanics}}
-      <h5 class="card-title">{{this.mechanic}}</h5>
-    {{/each}}
-  </div>
-</div>
-
-<div class="card">
-  <h5 class="card-header">Videos</h5>
-  <div class="card-body">
-    {{#each videos}}
-      <h5 class="card-title"><a href="https://youtube.com/watch?v={{this.url}}">{{this.title}}</a> ({{this.type}})</h5>
-      <iframe src="https://www.youtube.com/embed/{{this.url}}" frameborder="0" allowfullscreen>
-      </iframe>
-    {{/each}}
   </div>
 </div>
 
@@ -68,8 +34,7 @@
   <h5 class="card-header">Photos</h5>
   <div class="card-body">
     {{#each photos}}
-    	<img src="{{this.image}}" height="250"></br>
-    	{{this.description}}</br></br>
+    	<img src="{{this.image}}" height="200" title="{{this.description}}">
     {{/each}}
   </div>
 </div>
