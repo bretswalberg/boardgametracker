@@ -1,0 +1,19 @@
+{
+  "name": "board-game-tracker",
+  "version": "1.0.0",
+  "description": "Board Game tracker using Node and SQLite",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bret Swalberg",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "express": "^4.13.2",
+    "express-handlebars": "^6.0.2",
+    "express-session": "^1.11.3",
+    "md5": "^2.3.0",
+    "sqlite3": "^4.2.0"
+  }
+}
