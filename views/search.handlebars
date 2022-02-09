@@ -1,0 +1,23 @@
+<h3>Search Results</h3>
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Publisher</th>
+      <th scope="col">Designer</th>
+    </tr>
+  </thead>
+  <tbody>
+
+	{{#each data}}
+    <tr>
+        <td><a href="/viewgame?gid={{this.id}}">{{this.title}}</a></td>
+        <td>{{this.publisher}}</td>
+        <td>{{this.firstname}} {{this.lastname}}</td>
+    </tr>
+	{{/each}}
+
+  </tbody>
+</table>
+
+</form>
