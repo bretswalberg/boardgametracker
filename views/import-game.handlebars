@@ -1,0 +1,51 @@
+<div class="container" id="additions">
+    <div><h3>Import a Game from BoardGameGeek.com</h3><br></div>
+    <div id="new-game" aria-labelledby="game" >
+        Enter search terms below to find all matching games in the world's largest board game database, provided by
+        BoardGameGeek.com.<br><br>
+        <form action="/importgame" method="post">
+            <div class="form-group col-md-6">
+                <input type="search" size="6" class="form-control" name="gamesearch" id="gamesearch" placeholder="enter search terms">
+                <input type="submit" value="Search" class="btn btn-primary">
+            </div>        
+        </form>
+    </div>
+</div>
+
+<div class="container" id="search games">
+    <table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Year</th>
+        <th scope="col">Add</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>China</td>
+            <td>2005</td>
+            <td><a href="/">Import</a></td>
+        </tr>
+        <tr>
+            <td>Chinatown</td>
+            <td>1999</td>
+            <td><a href="/viewgame?gid=2" onclick="return confirm('Are you sure you want to add this to your library?')">Import</a></td>
+        </tr>
+        <tr>
+            <td>Big Trouble in Little China: The Game</td>
+            <td>2018</td>
+            <td><a href="/">Import</a></td>
+        </tr>
+        <tr>
+            <td>Power Grid: China/Korea</td>
+            <td>2008</td>
+            <td><a href="/">Import</a></td>
+        </tr>
+        <tr>
+            <td>Great Wall of China</td>
+            <td>2006</td>
+            <td><a href="/">Import</a></td>
+        </tr>
+    </tbody>
+</div>

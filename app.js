@@ -75,7 +75,7 @@ app.post('/newgame', function(req, res) {
 	var sql = "INSERT INTO game " + 
 			" (`title`, `year`, `publisher`, `minplayers`, `maxplayers`, " + 
 			" `minage`, `playtime`, `rating`, `bggid`) " + 
-			" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+			" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
     params = [
 	req.body['game-title'],
 	req.body['game-year'] || null,
@@ -95,6 +95,16 @@ app.post('/newgame', function(req, res) {
         }
         return res.redirect('/viewgames');
     });
+});
+
+app.get('/importgame', (req, res) => {
+	res.render('import-game', {});
+});
+
+app.post('/importgame', (req, res) => {
+	bggid = req.body['bgg-id'];
+	console.log("bgg id: " + bggid);
+	res.render('import-game', {});
 });
 
 app.get('/deletegame', function(req, res, next) {
