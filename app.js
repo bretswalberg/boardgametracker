@@ -1,22 +1,24 @@
-var express = require('express');
-var app = express();
-var db = require('./dbcon.js');
-var portnum = 8181			
-var handlebars = require('express-handlebars').create({defaultLayout:'main'});
+const express = require('express');
+const bodyParser = require("body-parser");
+const handlebars = require('express-handlebars').create({defaultLayout:'main'});
+const db = require('./dbcon.js');
+const http = require('http');
+const https = require('https');
+const { response } = require('express');
+const { report } = require('process');
 
-var bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: false }));
+const app = express();
+const portnum = 8181			
+
 app.use(bodyParser.json());
-
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('static'));
-
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.set('port', portnum);
 
-
 // render homepage on initial GET request
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
     res.render('home');
 });
 
@@ -101,11 +103,106 @@ app.get('/importgame', (req, res) => {
 	res.render('import-game', {});
 });
 
-app.post('/importgame', (req, res) => {
-	bggid = req.body['bgg-id'];
-	console.log("bgg id: " + bggid);
-	res.render('import-game', {});
+app.post('/import_game_id', (req, res) => {
+	var gameId = null;
+	var bggid = req.body['gameid'];
+	var json = {};
+
+	getGame('http://localhost:3000/bgg_api/' + bggid)
+	.then(function(json) {
+		insertGame(json, bggid)
+		.then(function(gameId) {
+			console.log("game id is: " + gameId);
+			res.redirect('viewgame?gid=' + gameId);
+		})
+		.catch(function(err) {
+			console.error(err)
+		})
+	})
+	.catch(function(err) {
+		console.error(err)
+	})
 });
+
+
+const getGame = function(url) {
+	return new Promise( (resolve, reject) => {
+		const request = http.get(url, (response) => {
+			if (response.statusCode != 200) {
+				reject(new Error('Failed to load page'));
+			}
+			var jsonResult = ''
+			response.on('data', (d) => jsonResult += d);
+			response.on('end', () => resolve(jsonResult));
+		});
+		request.on('error',  (err) => reject(err))
+	});
+};
+
+const insertGame = function(jsonData, bggid) {
+	return new Promise( (resolve, reject) => {
+		console.log("'jsonData:" + jsonData);
+
+		var jo = JSON.parse(jsonData)
+		var title = jo.name
+		var year = jo.yearpublished
+		var image = jo.image
+		var age = jo.age
+		var minplayers = jo.minplayers
+		var maxplayers = jo.maxplayers
+		var description = jo.description
+		var publisher = jo.boardgamepublisher
+		var time = jo.playingtime
+
+		var sql = "INSERT INTO game " + 
+			" (`title`, `year`, `publisher`, `minplayers`, `maxplayers`, " + 
+			" `minage`, `playtime`, `rating`, `bggid`, `description`) " + 
+			" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+		params = [title, year, publisher, minplayers, maxplayers,
+			age, time, 0, bggid, description]
+
+		const ins = db.run(sql, params, function(err) {
+			if (err) {
+				return console.log(err.message);
+			}
+			resolve(this.lastID);
+		});
+		ins.on('error',  (err) => reject(err))
+	});
+};
+
+/*
+		resp.on('end', () => {
+			var jo = JSON.parse(jsonResult)
+			var title = jo.name
+			var year = jo.yearpublished
+			var image = jo.image
+			var age = jo.age
+			var minplayers = jo.minplayers
+			var maxplayers = jo.maxplayers
+			var description = jo.description
+			var publisher = jo.boardgamepublisher
+			var time = jo.playingtime
+
+			var sql = "INSERT INTO game " + 
+				" (`title`, `year`, `publisher`, `minplayers`, `maxplayers`, " + 
+				" `minage`, `playtime`, `rating`, `bggid`, `description`) " + 
+				" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+			params = [title, year, publisher, minplayers, maxplayers,
+				age, time, 0, bggid, description]
+
+			db.run(sql, params, function(err) {
+				if (err) {
+					return console.log(err.message);
+				}
+				gameId = this.lastID
+				console.log("new gameid: " + gameId);
+			});
+		});
+	}).on("error", (err) => {
+		console.log("Error: " + err.message);
+	});
+*/
 
 app.get('/deletegame', function(req, res, next) {
 	var delPhoto = 'DELETE FROM gamephoto WHERE gameid = ?';

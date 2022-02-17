@@ -13,6 +13,8 @@
     "express": "^4.13.2",
     "express-handlebars": "^6.0.2",
     "express-session": "^1.11.3",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
     "md5": "^2.3.0",
     "sqlite3": "^4.2.0"
   }
