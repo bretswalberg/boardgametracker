@@ -8,7 +8,8 @@ const { response } = require('express');
 const { report } = require('process');
 
 const app = express();
-const portnum = 8181			
+const portnum = 8181
+const bgg_api_host = 'http://localhost:3000/bgg_api/';		
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -108,7 +109,7 @@ app.post('/import_game_id', (req, res) => {
 	var bggid = req.body['gameid'];
 	var json = {};
 
-	getGame('http://localhost:3000/bgg_api/' + bggid)
+	getGame(bgg_api_host + bggid)
 	.then(function(json) {
 		insertGame(json, bggid)
 		.then(function(gameId) {
@@ -156,10 +157,10 @@ const insertGame = function(jsonData, bggid) {
 
 		var sql = "INSERT INTO game " + 
 			" (`title`, `year`, `publisher`, `minplayers`, `maxplayers`, " + 
-			" `minage`, `playtime`, `rating`, `bggid`, `description`) " + 
-			" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+			" `minage`, `playtime`, `rating`, `bggid`, `image`, `description`) " + 
+			" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 		params = [title, year, publisher, minplayers, maxplayers,
-			age, time, 0, bggid, description]
+			age, time, 0, bggid, image, description]
 
 		const ins = db.run(sql, params, function(err) {
 			if (err) {
@@ -170,39 +171,6 @@ const insertGame = function(jsonData, bggid) {
 		ins.on('error',  (err) => reject(err))
 	});
 };
-
-/*
-		resp.on('end', () => {
-			var jo = JSON.parse(jsonResult)
-			var title = jo.name
-			var year = jo.yearpublished
-			var image = jo.image
-			var age = jo.age
-			var minplayers = jo.minplayers
-			var maxplayers = jo.maxplayers
-			var description = jo.description
-			var publisher = jo.boardgamepublisher
-			var time = jo.playingtime
-
-			var sql = "INSERT INTO game " + 
-				" (`title`, `year`, `publisher`, `minplayers`, `maxplayers`, " + 
-				" `minage`, `playtime`, `rating`, `bggid`, `description`) " + 
-				" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-			params = [title, year, publisher, minplayers, maxplayers,
-				age, time, 0, bggid, description]
-
-			db.run(sql, params, function(err) {
-				if (err) {
-					return console.log(err.message);
-				}
-				gameId = this.lastID
-				console.log("new gameid: " + gameId);
-			});
-		});
-	}).on("error", (err) => {
-		console.log("Error: " + err.message);
-	});
-*/
 
 app.get('/deletegame', function(req, res, next) {
 	var delPhoto = 'DELETE FROM gamephoto WHERE gameid = ?';
