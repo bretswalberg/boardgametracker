@@ -125,8 +125,37 @@ app.post('/import_game_id', (req, res) => {
 	})
 });
 
+app.post('/search_import_game', (req, res) => {
+	var searchTerms = req.body['gamesearch'];
+	var json = {};
+	var games = [];
+
+	importSearchGames(bgg_api_host + 'search/' + searchTerms)
+	.then(function(json) {
+		var search_result = JSON.parse(json);
+		games = search_result.games;
+		res.render('import-search-results', {data: games});
+	})
+	.catch(function(err) {
+		console.error(err)
+	})
+});
 
 const getGame = function(url) {
+	return new Promise( (resolve, reject) => {
+		const request = http.get(url, (response) => {
+			if (response.statusCode != 200) {
+				reject(new Error('Failed to load page'));
+			}
+			var jsonResult = ''
+			response.on('data', (d) => jsonResult += d);
+			response.on('end', () => resolve(jsonResult));
+		});
+		request.on('error',  (err) => reject(err))
+	});
+};
+
+const importSearchGames = function(url) {
 	return new Promise( (resolve, reject) => {
 		const request = http.get(url, (response) => {
 			if (response.statusCode != 200) {
@@ -292,31 +321,16 @@ app.get('/search', function(req, res, next) {
 	const sql = "SELECT id, title, publisher " +
 					"FROM game " +
 					"WHERE (title LIKE ? " +
-					"  OR publisher LIKE ? ) ";
+					"  OR publisher LIKE ? )" +
+					" ORDER BY title ";
 	var params = ['%' + req.query.s + '%', '%' + req.query.s + '%']; 
 	db.all(sql,	params, (err, rows) => {
 		if (err) {
 			next(err);
 			return;
 		}
+		console.log(rows);
 		res.render('search', {data: rows});
-	});
-});
-
-app.post('/newvideo', function(req, res) {
-	mysql.pool.query("INSERT INTO video (`title`, `url`, `type`) VALUES(?, ?, ?)",
-	[
-	req.body['vid-title'],
-	req.body['vid-url'],
-	req.body['vid-type']
-	],
-	function (err, result) {
-		if (err) {
-			console.error(err.stack);
-			next(err);
-			return;
-		}
-		res.render('view-video');
 	});
 });
 

@@ -22,7 +22,7 @@
     </p>
     {{#if game.bggid}}
     <p>
-      {{game.description}}<br><br>
+      {{{game.description}}}<br><br>
       Learn more about {{game.title}} at  
     <a href="https://www.boardgamegeek.com/boardgame/{{game.bggid}}" class="card-link" target="bgg">BoardGameGeek.com</a>
     </p>
@@ -34,8 +34,8 @@
 <div class="card">
   <h5 class="card-header">Photos</h5>
   <div class="card-body">
-    {{#each photos}}
-    	<img src="{{this.image}}" height="200" title="{{this.description}}">
-    {{/each}}
+    {{#if game.image}}
+    	<img src="{{game.image}}" height="200" title="{{game.title}}">
+    {{/if}}
   </div>
 </div>
