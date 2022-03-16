@@ -1,9 +1,11 @@
-<h3>Search Results</h3>
+<div class="row w-75 mx-auto">
+<h3>Board Game Geek Search Results</h3>
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
       <th scope="col">Title</th>
       <th scope="col">Year</th>
+      <th scope="col">BGG Link</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -13,6 +15,9 @@
     <tr>
         <td>{{this.game}}</td>
         <td>{{this.yearpublished}}</td>
+        <td>
+          <a href="https://www.boardgamegeek.com/boardgame/{{this.gameid}}" class="card-link" target="bgg">BoardGameGeek.com</a>
+        </td>
         <td>
             <form action="/import_game_id" method="post">
             <input type="hidden" name="gameid" id="gameid" value="{{this.gameid}}">
@@ -24,5 +29,6 @@
 
   </tbody>
 </table>
+</div>
 
 </form>

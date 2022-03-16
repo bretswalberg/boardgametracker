@@ -113,7 +113,6 @@ app.post('/import_game_id', (req, res) => {
 	.then(function(json) {
 		insertGame(json, bggid)
 		.then(function(gameId) {
-			console.log("game id is: " + gameId);
 			res.redirect('viewgame?gid=' + gameId);
 		})
 		.catch(function(err) {
@@ -171,8 +170,6 @@ const importSearchGames = function(url) {
 
 const insertGame = function(jsonData, bggid) {
 	return new Promise( (resolve, reject) => {
-		console.log("'jsonData:" + jsonData);
-
 		var jo = JSON.parse(jsonData)
 		var title = jo.name
 		var year = jo.yearpublished
@@ -329,7 +326,6 @@ app.get('/search', function(req, res, next) {
 			next(err);
 			return;
 		}
-		console.log(rows);
 		res.render('search', {data: rows});
 	});
 });
