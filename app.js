@@ -140,6 +140,7 @@ app.post('/search_import_game', (req, res) => {
 	})
 });
 
+//BGG Service to retrieve a game by the specified BGG ID
 const getGame = function(url) {
 	return new Promise( (resolve, reject) => {
 		const request = http.get(url, (response) => {
@@ -154,6 +155,7 @@ const getGame = function(url) {
 	});
 };
 
+//BGG Service to retrieve all matching games from search terms
 const importSearchGames = function(url) {
 	return new Promise( (resolve, reject) => {
 		const request = http.get(url, (response) => {
